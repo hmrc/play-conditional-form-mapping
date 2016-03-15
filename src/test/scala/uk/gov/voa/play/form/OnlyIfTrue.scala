@@ -24,6 +24,37 @@ import play.api.data.Forms._
 class OnlyIfTrue extends FlatSpec with Matchers {
   import ConditionalMappings._
 
+  behavior of "isTrue and isFalse"
+
+  it should "apply a mapping with value TRUE is string in a case-variation of TRUE" in {
+    isTrue("source")(Map("source" -> "true")) should be(true)
+    isTrue("source")(Map("source" -> "TRUE")) should be(true)
+    isTrue("source")(Map("source" -> "TRuE")) should be(true)
+  }
+
+  it should "apply a mapping with value FALSE is string in a case-variation of FALSE" in {
+    isTrue("source")(Map("source" -> "false")) should be(false)
+    isTrue("source")(Map("source" -> "FALSE")) should be(false)
+    isTrue("source")(Map("source" -> "fAlSe")) should be(false)
+  }
+
+  it should "apply a mapping with value TRUE is string in a case-variation of FALSE" in {
+    isFalse("source")(Map("source" -> "false")) should be(true)
+    isFalse("source")(Map("source" -> "FALSE")) should be(true)
+    isFalse("source")(Map("source" -> "fAlSe")) should be(true)
+  }
+
+  it should "apply a mapping with value FALSE is string in a case-variation of TRUE" in {
+    isFalse("source")(Map("source" -> "true")) should be(false)
+    isFalse("source")(Map("source" -> "TRUE")) should be(false)
+    isFalse("source")(Map("source" -> "TRuE")) should be(false)
+  }
+
+  it should "apply a mapping with value FALSE is string in not a case-variation of TRUE or FALSE" in {
+    isTrue("source")(Map("source" -> "non-sensical")) should be(false)
+    isFalse("source")(Map("source" -> "non-sensical")) should be(false)
+  }
+
   behavior of "only if true"
 
   it should "apply the mapping to the target field if the source field is true" in {

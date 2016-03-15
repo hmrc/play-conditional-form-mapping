@@ -18,14 +18,20 @@ package uk.gov.voa.play.form
 
 import play.api.data.Mapping
 
-object ConditionalMappings {
-  def isTrue(field: String): Condition  = _.get(field).map(_.toBoolean).getOrElse(false)
-  def isFalse(field: String): Condition = _.get(field).map(_.toBoolean == false).getOrElse(false)
-  def isEqual(field: String, value: String): Condition = _.get(field).map(_ == value).getOrElse(false)
-  def isNotEqual(field: String, value: String): Condition = _.get(field).map(_ != value).getOrElse(false)
-  def isAnyOf(field: String, values: Seq[String]): Condition = _.get(field).map(values.contains).getOrElse(false)
-  def isNotAnyOf(field: String, values: Seq[String]): Condition = _.get(field).map(values.contains).exists(_ == false)
+import scala.util.Try
 
+object ConditionalMappings {
+  def isTrue(field: String): Condition = _.get(field).flatMap(v => Try(v.toBoolean).toOption).getOrElse(false)
+
+  def isFalse(field: String): Condition = _.get(field).flatMap(v => Try(!v.toBoolean).toOption).getOrElse(false)
+
+  def isEqual(field: String, value: String): Condition = _.get(field).map(_ == value).getOrElse(false)
+
+  def isNotEqual(field: String, value: String): Condition = _.get(field).map(_ != value).getOrElse(false)
+
+  def isAnyOf(field: String, values: Seq[String]): Condition = _.get(field).map(values.contains).getOrElse(false)
+
+  def isNotAnyOf(field: String, values: Seq[String]): Condition = _.get(field).map(values.contains).exists(_ == false)
 
   def onlyIf[T](c: Condition, mapping: Mapping[T])(implicit nonMapValue: T): Mapping[T] =
     ConditionalMapping(c, mapping, nonMapValue)
@@ -46,7 +52,7 @@ object ConditionalMappings {
     ConditionalMapping(isTrue(fieldName)(_), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 
   def mandatoryIfAnyAreTrue[T](fields: Seq[String], mapping: Mapping[T], prefix: Option[String] = None,
-    showNestedErrors: Boolean = true, fieldsToExclude: Seq[String] = Seq.empty): Mapping[Option[T]] = {
+                               showNestedErrors: Boolean = true, fieldsToExclude: Seq[String] = Seq.empty): Mapping[Option[T]] = {
     ConditionalMapping(x => fields.exists(isTrue(_)(x)), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
   }
 
@@ -69,7 +75,7 @@ object ConditionalMappings {
     ConditionalMapping(_.keys.toSeq.contains(fieldName), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 
   def mandatoryIfEqual[T](fieldName: String, value: String, mapping: Mapping[T]): Mapping[Option[T]] = {
-    val condition: Condition =  _.get(fieldName).map(_ == value).getOrElse(false)
+    val condition: Condition = _.get(fieldName).map(_ == value).getOrElse(false)
     ConditionalMapping(condition, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
   }
 
