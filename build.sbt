@@ -4,10 +4,20 @@ import uk.gov.hmrc.versioning.SbtGitVersioning
 
 val appName = "play-conditional-form-mapping"
 
-lazy val appDependencies = Seq(
-  "com.typesafe.play" %% "play" % "2.5.19",
-  "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-  "org.pegdown" % "pegdown" % "1.6.0" % "test"
+val compileDependencies = PlayCrossCompilation.dependencies(
+  play25 = Seq(
+    "com.typesafe.play" %% "play" % "2.5.19"
+  ),
+  play26 = Seq(
+    "com.typesafe.play" %% "play" % "2.6.20"
+  )
+)
+
+val testDependencies = PlayCrossCompilation.dependencies(
+  shared = Seq(
+    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
+    "org.pegdown" % "pegdown" % "1.6.0" % "test"
+  )
 )
 
 lazy val playConditionalFormMapping = (project in file("."))
@@ -15,11 +25,12 @@ lazy val playConditionalFormMapping = (project in file("."))
   .settings(
     name := appName,
     majorVersion := 1,
-    scalaVersion := "2.11.12",
-    libraryDependencies ++= appDependencies,
+    libraryDependencies ++= compileDependencies ++ testDependencies,
     resolvers := Seq(
       Resolver.bintrayRepo("hmrc", "releases"),
       "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
     ),
-    crossScalaVersions := Seq("2.11.12")
+    scalaVersion := "2.11.12",
+    crossScalaVersions := Seq("2.11.12", "2.12.8")
   )
+  .settings(PlayCrossCompilation.playCrossCompilationSettings)
