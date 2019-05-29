@@ -25,6 +25,7 @@ lazy val playConditionalFormMapping = (project in file("."))
   .settings(
     name := appName,
     majorVersion := 1,
+    makePublicallyAvailableOnBintray := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
     resolvers := Seq(
       Resolver.bintrayRepo("hmrc", "releases"),
