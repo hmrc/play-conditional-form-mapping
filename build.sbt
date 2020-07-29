@@ -2,7 +2,7 @@ import sbt.Keys._
 import sbt._
 import uk.gov.hmrc.versioning.SbtGitVersioning
 
-val appName = "play-conditional-form-mapping"
+val libName = "play-conditional-form-mapping"
 
 val compileDependencies = PlayCrossCompilation.dependencies(
   play25 = Seq(
@@ -10,6 +10,9 @@ val compileDependencies = PlayCrossCompilation.dependencies(
   ),
   play26 = Seq(
     "com.typesafe.play" %% "play" % "2.6.20"
+  ),
+  play27 = Seq(
+    "com.typesafe.play" %% "play" % "2.7.5"
   )
 )
 
@@ -23,7 +26,7 @@ val testDependencies = PlayCrossCompilation.dependencies(
 lazy val playConditionalFormMapping = (project in file("."))
   .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
   .settings(
-    name := appName,
+    name := libName,
     majorVersion := 1,
     makePublicallyAvailableOnBintray := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
@@ -31,7 +34,11 @@ lazy val playConditionalFormMapping = (project in file("."))
       Resolver.bintrayRepo("hmrc", "releases"),
       "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
     ),
-    scalaVersion := "2.11.12",
-    crossScalaVersions := Seq("2.11.12", "2.12.8")
+    crossScalaVersions := List(scala212, scala211),
+    scalaVersion := scala212
   )
   .settings(PlayCrossCompilation.playCrossCompilationSettings)
+
+lazy val scala212 = "2.12.10"
+lazy val scala211 = "2.11.12"
+
