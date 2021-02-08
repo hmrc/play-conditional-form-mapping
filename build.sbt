@@ -5,9 +5,6 @@ import uk.gov.hmrc.versioning.SbtGitVersioning
 val libName = "play-conditional-form-mapping"
 
 val compileDependencies = PlayCrossCompilation.dependencies(
-  play25 = Seq(
-    "com.typesafe.play" %% "play" % "2.5.19"
-  ),
   play26 = Seq(
     "com.typesafe.play" %% "play" % "2.6.20"
   ),
@@ -18,7 +15,7 @@ val compileDependencies = PlayCrossCompilation.dependencies(
 
 val testDependencies = PlayCrossCompilation.dependencies(
   shared = Seq(
-    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.8" % "test",
     "org.pegdown" % "pegdown" % "1.6.0" % "test"
   )
 )
