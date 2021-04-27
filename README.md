@@ -1,5 +1,4 @@
 # play-conditional-form-mapping
-[![Build Status](https://travis-ci.org/hmrc/play-conditional-form-mapping.svg?branch=master)](https://travis-ci.org/hmrc/play-conditional-form-mapping) [ ![Download](https://api.bintray.com/packages/hmrc/releases/play-conditional-form-mapping/images/download.svg) ](https://bintray.com/hmrc/releases/play-conditional-form-mapping/_latestVersion)
 
 Play framework conditional form mapping with field-level errors.
 
@@ -191,7 +190,7 @@ case class Model(source: Boolean, target: Option[String])
 Include the following dependency in your SBT build
 
 ```scala
-resolvers += Resolver.bintrayRepo("hmrc", "releases")
+resolvers += "HMRC-open-artefacts-maven" at "https://open.artefacts.tax.service.gov.uk/maven2"
 
 libraryDependencies += "uk.gov.hmrc" %% "play-conditional-form-mapping" % "[INSERT_VERSION]"
 ```

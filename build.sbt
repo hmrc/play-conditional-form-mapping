@@ -27,10 +27,7 @@ lazy val playConditionalFormMapping = (project in file("."))
     majorVersion := 1,
     makePublicallyAvailableOnBintray := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
-    resolvers := Seq(
-      Resolver.bintrayRepo("hmrc", "releases"),
-      "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
-    ),
+    resolvers := Seq("typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"),
     crossScalaVersions := List(scala212, scala211),
     scalaVersion := scala212
   )
