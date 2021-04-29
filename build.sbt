@@ -10,6 +10,9 @@ val compileDependencies = PlayCrossCompilation.dependencies(
   ),
   play27 = Seq(
     "com.typesafe.play" %% "play" % "2.7.5"
+  ),
+  play28 = Seq(
+    "com.typesafe.play" %% "play" % "2.8.7"
   )
 )
 
@@ -28,11 +31,8 @@ lazy val playConditionalFormMapping = (project in file("."))
     makePublicallyAvailableOnBintray := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
     resolvers := Seq("typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"),
-    crossScalaVersions := List(scala212, scala211),
     scalaVersion := scala212
   )
   .settings(PlayCrossCompilation.playCrossCompilationSettings)
 
 lazy val scala212 = "2.12.10"
-lazy val scala211 = "2.11.12"
-
