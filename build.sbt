@@ -5,12 +5,6 @@ import uk.gov.hmrc.versioning.SbtGitVersioning
 val libName = "play-conditional-form-mapping"
 
 val compileDependencies = PlayCrossCompilation.dependencies(
-  play26 = Seq(
-    "com.typesafe.play" %% "play" % "2.6.20"
-  ),
-  play27 = Seq(
-    "com.typesafe.play" %% "play" % "2.7.5"
-  ),
   play28 = Seq(
     "com.typesafe.play" %% "play" % "2.8.7"
   )
