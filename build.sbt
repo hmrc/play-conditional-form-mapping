@@ -1,4 +1,3 @@
-import uk.gov.hmrc.SbtArtifactory.autoImport.makePublicallyAvailableOnBintray
 
 val libName = "play-conditional-form-mapping"
 
@@ -16,11 +15,11 @@ val testDependencies = PlayCrossCompilation.dependencies(
 )
 
 lazy val playConditionalFormMapping = (project in file("."))
-  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
+  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
   .settings(
     name := libName,
     majorVersion := 1,
-    makePublicallyAvailableOnBintray := true,
+    isPublicArtefact := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
     resolvers := Seq("typesafe-releases" at "https://repo.typesafe.com/typesafe/releases/"),
     scalaVersion := scala2_12,
