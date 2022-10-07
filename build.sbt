@@ -1,6 +1,4 @@
-import sbt.Keys._
-import sbt._
-import uk.gov.hmrc.versioning.SbtGitVersioning
+import uk.gov.hmrc.SbtArtifactory.autoImport.makePublicallyAvailableOnBintray
 
 val libName = "play-conditional-form-mapping"
 
