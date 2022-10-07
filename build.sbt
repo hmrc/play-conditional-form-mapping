@@ -24,9 +24,11 @@ lazy val playConditionalFormMapping = (project in file("."))
     majorVersion := 1,
     makePublicallyAvailableOnBintray := true,
     libraryDependencies ++= compileDependencies ++ testDependencies,
-    resolvers := Seq("typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"),
-    scalaVersion := scala212
+    resolvers := Seq("typesafe-releases" at "https://repo.typesafe.com/typesafe/releases/"),
+    scalaVersion := scala2_12,
+    crossScalaVersions := Seq(scala2_12, scala2_13)
   )
   .settings(PlayCrossCompilation.playCrossCompilationSettings)
 
-lazy val scala212 = "2.12.10"
+val scala2_12 = "2.12.15"
+val scala2_13 = "2.13.8"
