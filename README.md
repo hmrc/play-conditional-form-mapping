@@ -187,13 +187,28 @@ case class Model(source: Boolean, target: Option[String])
 ```
 ### Installing
 
-Include the following dependency in your SBT build
+Include the following dependency in your SBT build **before v2.0.0**
 
 ```scala
 resolvers += "HMRC-open-artefacts-maven" at "https://open.artefacts.tax.service.gov.uk/maven2"
 
 libraryDependencies += "uk.gov.hmrc" %% "play-conditional-form-mapping" % "[INSERT_VERSION]"
 ```
+
+Include one of the following in your SBT build for **v2.0.0 or after** depending on whether you're using Play 2.8, Play 2.9 or Play 3.0
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "play-conditional-form-mapping-play-28" % "[INSERT_VERSION]"
+
+OR
+
+libraryDependencies += "uk.gov.hmrc" %% "play-conditional-form-mapping-play-29" % "[INSERT_VERSION]"
+
+OR
+
+libraryDependencies += "uk.gov.hmrc" %% "play-conditional-form-mapping-play-30" % "[INSERT_VERSION]"
+```
+
+
 
 ## License ##
  

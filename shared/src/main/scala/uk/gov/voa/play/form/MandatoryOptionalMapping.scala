@@ -31,7 +31,7 @@ case class MandatoryOptionalMapping[T](wrapped: Mapping[T], constraints: Seq[Con
   }
 
   def bind(data: Map[String, String]): Either[Seq[FormError], Option[T]] =
-    wrapped.bind(data).right.map(Some(_)).right.flatMap(applyConstraints)
+    wrapped.bind(data).map(Some(_)).flatMap(applyConstraints)
 
   def unbind(value: Option[T]): Map[String, String] = {
     value.map(wrapped.unbind).getOrElse(Map.empty)

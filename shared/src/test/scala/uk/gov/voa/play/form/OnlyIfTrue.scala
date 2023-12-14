@@ -16,12 +16,13 @@
 
 package uk.gov.voa.play.form
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.OptionValues._
 import play.api.data.Form
 import play.api.data.Forms._
 
-class OnlyIfTrue extends FlatSpec with Matchers {
+class OnlyIfTrue extends AnyFlatSpecLike with Matchers {
   import ConditionalMappings._
 
   behavior of "isTrue and isFalse"

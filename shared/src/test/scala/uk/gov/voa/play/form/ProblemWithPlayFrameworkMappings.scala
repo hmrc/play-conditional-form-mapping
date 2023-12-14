@@ -16,11 +16,12 @@
 
 package uk.gov.voa.play.form
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import play.api.data.Form
 import play.api.data.Forms._
 
-class ProblemWithPlayFrameworkMappings extends FlatSpec with Matchers {
+class ProblemWithPlayFrameworkMappings extends AnyFlatSpecLike with Matchers {
 
   behavior of "vanilla play conditional mapping"
 
@@ -50,7 +51,7 @@ class ProblemWithPlayFrameworkMappings extends FlatSpec with Matchers {
 
 case class Model(nonUkResident: Boolean, country: Option[String], email: String)
 
-class SolutionUsingConditionalMappings extends FlatSpec with Matchers {
+class SolutionUsingConditionalMappings extends AnyFlatSpecLike with Matchers {
   import ConditionalMappings._
 
   behavior of "conditional mappings"
