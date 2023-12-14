@@ -16,35 +16,34 @@
 
 package uk.gov.voa.play.form
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import play.api.data.Form
 import play.api.data.Forms._
 
-class MandatoryIfAnyAreTrue extends FlatSpec with Matchers {
+class MandatoryIfEqual extends AnyFlatSpecLike with Matchers {
   import ConditionalMappings._
 
-  behavior of "mandatory if any are true"
+  behavior of "mandatory if equal"
 
-  it should "mandate the target field if any of the source fields are true" in {
-    Seq("f1", "f2", "f3") foreach { f =>
-      val data = Map(f -> "true")
-      val res = form.bind(data)
+  it should "mandate the target field if the source has the required value" in {
+    val data = Map("country" -> "England")
+    val res = form.bind(data)
 
-      assert(res.errors.head.key === "target")
-    }
+    assert(res.errors.head.key === "town")
   }
 
-  it should "not mandate the target field if neither of the source fields are true" in {
-    val res = form.bind(Map.empty[String, String])
+  it should "not mandate the target field if the source field does not have the required value" in {
+    val data = Map("country" -> "Scotland")
+    val res = form.bind(data)
+
     assert(res.errors.isEmpty)
   }
 
   lazy val form = Form(mapping(
-    "f1" -> boolean,
-    "f2" -> boolean,
-    "f3" -> boolean,
-    "target" -> mandatoryIfAnyAreTrue(Seq("f1", "f2", "f3"), nonEmptyText)
+    "country" -> nonEmptyText,
+    "town" -> mandatoryIfEqual("country", "England", nonEmptyText)
   )(Model.apply)(Model.unapply))
 
-  case class Model(f1: Boolean, f2: Boolean, f3: Boolean, target: Option[String])
+  case class Model(country: String, town: Option[String])
 }

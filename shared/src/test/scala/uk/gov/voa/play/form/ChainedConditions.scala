@@ -16,32 +16,38 @@
 
 package uk.gov.voa.play.form
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import play.api.data.Form
 import play.api.data.Forms._
 
-class MandatoryIfExists extends FlatSpec with Matchers {
+class ChainedConditions extends AnyFlatSpecLike with Matchers {
   import ConditionalMappings._
 
-  behavior of "mandatory if exists"
+  behavior of "chained mappings"
 
-  it should "mandate the target field if any value for the source field is supplied" in {
-    val data = Map("source" -> "anyrandomvalue")
+  it should "apply mappings if all of the chained criteria are satisfied" in {
+    val data = Map("name" -> "Francoise", "age" -> "21")
     val res = form.bind(data)
 
-    assert(res.errors.head.key === "target")
+    assert(res.errors.head.key === "favouriteColour")
   }
 
-  it should "not mandate the target field is  no value for the source field is supplied" in {
-    val res = form.bind(Map.empty[String, String])
+  it should "not apply mappings if any part of the chained critieria is not satisfied" in {
+    val data = Map("name" -> "Francoise", "age" -> "20")
+    val res = form.bind(data)
 
     assert(res.errors.isEmpty)
   }
 
   lazy val form = Form(mapping(
-    "source" ->  optional(nonEmptyText),
-    "target" -> mandatoryIfExists("source", nonEmptyText)
+    "name" -> nonEmptyText,
+    "age" -> number,
+    "favouriteColour" -> mandatoryIf(
+      isEqual("name", "Francoise") and isEqual("age", "21"),
+      nonEmptyText
+    )
   )(Model.apply)(Model.unapply))
 
-  case class Model(source: Option[String], target: Option[String])
+  case class Model(name: String, age: Int, favouriteColour: Option[String])
 }

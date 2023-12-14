@@ -16,11 +16,12 @@
 
 package uk.gov.voa.play.form
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import play.api.data.Form
 import play.api.data.Forms._
 
-class MandatoryIfAllEqual extends FlatSpec with Matchers {
+class MandatoryIfAllEqual extends AnyFlatSpecLike with Matchers {
   import ConditionalMappings._
 
   behavior of "mandatory if all equal"
