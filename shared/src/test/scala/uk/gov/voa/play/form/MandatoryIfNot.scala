@@ -18,11 +18,9 @@ package uk.gov.voa.play.form
 
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.data.Form
-import play.api.data.Forms._
+import MandatoryIfNotForm._
 
 class MandatoryIfNot extends AnyFlatSpecLike with Matchers {
-  import ConditionalMappings._
 
   it should "mandate the target field if the source field DOES not match the specified value" in {
     val data = Map("source" -> "NotTheMagicValue")
@@ -37,11 +35,4 @@ class MandatoryIfNot extends AnyFlatSpecLike with Matchers {
 
     assert(res.errors.isEmpty)
   }
-
-  lazy val form = Form(mapping(
-    "source" -> nonEmptyText,
-    "target" -> mandatoryIfNot("source", "magicValue", nonEmptyText)
-  )(Model.apply)(Model.unapply))
-
-  case class Model(source: String, target: Option[String])
 }

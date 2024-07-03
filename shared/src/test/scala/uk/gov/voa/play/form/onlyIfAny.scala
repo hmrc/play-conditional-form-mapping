@@ -19,11 +19,9 @@ package uk.gov.voa.play.form
 import org.scalatest.OptionValues._
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.data.Form
-import play.api.data.Forms._
+import OnlyIfAnyForm._
 
-class onlyIfAny extends AnyFlatSpecLike with Matchers {
-  import ConditionalMappings._
+class OnlyIfAny extends AnyFlatSpecLike with Matchers {
 
   behavior of "only if any"
 
@@ -43,13 +41,4 @@ class onlyIfAny extends AnyFlatSpecLike with Matchers {
 
     assert(res.value.value.target === None)
   }
-
-  lazy val form = Form(mapping(
-    "s1" -> nonEmptyText,
-    "s2" -> nonEmptyText,
-    "s3" -> nonEmptyText,
-    "target" -> onlyIfAny(Seq("s1" -> "magicValue", "s2" -> "magicValue", "s3" -> "magicValue"), optional(nonEmptyText))
-  )(Model.apply)(Model.unapply))
-
-  case class Model(s1: String, s2: String, s3: String, target: Option[String])
 }
