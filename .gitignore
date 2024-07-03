@@ -17,5 +17,8 @@ dist
 /RUNNING_PID
 /.settings
 *.iws
-
-    
+.bsp/
+.metals/
+.vscode/
+.bloop/
+project/metals.sbt
