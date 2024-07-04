@@ -6,14 +6,11 @@ object LibDependencies {
 
   object PlayVersion {
 
-    case object Play28 extends PlayVersion
     case object Play29 extends PlayVersion
     case object Play30 extends PlayVersion
-
   }
 
   def compileDependencies(playVersion: PlayVersion) = playVersion match {
-    case PlayVersion.Play28 => "com.typesafe.play" %% "play" % "2.8.21"
     case PlayVersion.Play29 => "com.typesafe.play" %% "play" % "2.9.0"
     case PlayVersion.Play30 => "org.playframework" %% "play" % "3.0.0"
   }

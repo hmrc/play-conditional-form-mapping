@@ -18,11 +18,9 @@ package uk.gov.voa.play.form
 
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.data.Form
-import play.api.data.Forms._
+import MandatoryIfAllEqualForm._
 
 class MandatoryIfAllEqual extends AnyFlatSpecLike with Matchers {
-  import ConditionalMappings._
 
   behavior of "mandatory if all equal"
 
@@ -41,15 +39,5 @@ class MandatoryIfAllEqual extends AnyFlatSpecLike with Matchers {
 
       assert(res.errors.isEmpty)
     }
-
   }
-
-  lazy val form = Form(mapping(
-    "s1" -> nonEmptyText,
-    "s2" -> nonEmptyText,
-    "s3" -> nonEmptyText,
-    "target" -> mandatoryIfAllEqual(Seq("s1" -> "s1val", "s2" -> "s2val", "s3" -> "s3val"), nonEmptyText)
-  )(Model.apply)(Model.unapply))
-
-  case class Model(s1: String, s2: String, s3: String, target: Option[String])
 }

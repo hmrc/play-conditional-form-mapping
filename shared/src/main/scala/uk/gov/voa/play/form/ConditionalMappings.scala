@@ -89,5 +89,5 @@ object ConditionalMappings {
   }
 
   def mandatory[T](mapping: Mapping[T], prefix: Option[String] = None, showNestedErrors: Boolean = true) =
-    ConditionalMapping(x => true, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
+    ConditionalMapping(_ => true, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 }

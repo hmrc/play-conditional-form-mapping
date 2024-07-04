@@ -18,10 +18,9 @@ package uk.gov.voa.play.form
 
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.data.Form
-import play.api.data.Forms._
 
 class ProblemWithPlayFrameworkMappings extends AnyFlatSpecLike with Matchers {
+  import ProblemWithPlayFrameworkMappingsForm._
 
   behavior of "vanilla play conditional mapping"
 
@@ -40,19 +39,11 @@ class ProblemWithPlayFrameworkMappings extends AnyFlatSpecLike with Matchers {
     assert(res.errors.length == 1)
     assert(res.errors.head.key === "")
   }
-
-  lazy val form = Form(mapping(
-    "nonUkResident" -> boolean,
-    "country" -> optional(nonEmptyText),
-    "email" -> nonEmptyText
-  )(Model.apply)(Model.unapply).verifying("Error.countryRequired", x => x.nonUkResident && x.country.isDefined))
-
 }
 
-case class Model(nonUkResident: Boolean, country: Option[String], email: String)
 
 class SolutionUsingConditionalMappings extends AnyFlatSpecLike with Matchers {
-  import ConditionalMappings._
+  import SolutionUsingConditionalMappingsForm._
 
   behavior of "conditional mappings"
 
@@ -64,10 +55,4 @@ class SolutionUsingConditionalMappings extends AnyFlatSpecLike with Matchers {
     assert(res.errors.head.key === "country")
     assert(res.errors.tail.head.key === "email")
   }
-
-  lazy val form = Form(mapping(
-    "nonUkResident" -> boolean,
-    "country" -> mandatoryIfTrue("nonUkResident", nonEmptyText),
-    "email" -> nonEmptyText
-  )(Model.apply)(Model.unapply))
 }

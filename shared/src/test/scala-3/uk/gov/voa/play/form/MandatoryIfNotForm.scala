@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.voa.play
+package uk.gov.voa.play.form
 
-package object form {
-  implicit def emptyOption[A]: Option[A] = None
-  implicit def emptyList[A]: List[A] = List.empty
-  implicit class conditionOpts(c: Condition) {
-    def and(c2: Condition): Condition = d => c(d) && c2(d)
-  }
-  type Condition = Map[String, String] => Boolean
+import play.api.data.Form
+import play.api.data.Forms._
+import ConditionalMappings._
+
+object MandatoryIfNotForm {
+  
+  lazy val form = Form(mapping(
+    "source" -> nonEmptyText,
+    "target" -> mandatoryIfNot("source", "magicValue", nonEmptyText)
+  )(Model.apply)(o => Some(Tuple.fromProductTyped(o))))
+
+  final case class Model(source: String, target: Option[String])
 }

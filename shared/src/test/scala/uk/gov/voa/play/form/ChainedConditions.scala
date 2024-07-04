@@ -18,11 +18,9 @@ package uk.gov.voa.play.form
 
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.data.Form
-import play.api.data.Forms._
+import ChainedConditionsForm._
 
 class ChainedConditions extends AnyFlatSpecLike with Matchers {
-  import ConditionalMappings._
 
   behavior of "chained mappings"
 
@@ -39,15 +37,4 @@ class ChainedConditions extends AnyFlatSpecLike with Matchers {
 
     assert(res.errors.isEmpty)
   }
-
-  lazy val form = Form(mapping(
-    "name" -> nonEmptyText,
-    "age" -> number,
-    "favouriteColour" -> mandatoryIf(
-      isEqual("name", "Francoise") and isEqual("age", "21"),
-      nonEmptyText
-    )
-  )(Model.apply)(Model.unapply))
-
-  case class Model(name: String, age: Int, favouriteColour: Option[String])
 }
