@@ -147,7 +147,7 @@ lazy val form = Form(mapping(
 case class Model(name: String, age: Int, favouriteColour: Option[String])
 ```
 
-###Example 4 - Non Mandatory Conditional Mappings
+### Example 4 - Non Mandatory Conditional Mappings
 If you want a mapping to apply based on the value of another field, without the target
 field becoming mandatory i.e you want the form value to be ignored, you can use
 the ```onlyIf``` mappings:
