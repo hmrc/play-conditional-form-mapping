@@ -17,7 +17,6 @@ object LibDependencies {
 
   val testDependencies = Seq(
       "org.scalatest"          %% "scalatest"    % "3.2.17",
-      "org.pegdown"            % "pegdown"       % "1.6.0" ,
       "com.vladsch.flexmark"   %  "flexmark-all" % "0.64.8"
     ).map(_ % Test)
 
