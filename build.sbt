@@ -7,7 +7,7 @@ ThisBuild / scalaVersion       := scala2_13
 ThisBuild / majorVersion       := 3
 ThisBuild / isPublicArtefact   := true
 
-lazy val play30 = Project(s"$libName-play-30", file("play-30"))
+lazy val playConditionalFormMapping = Project(s"$libName-play-30", file("play-30"))
   .settings(
     crossScalaVersions := Seq(scala3, scala2_13),
     libraryDependencies ++= LibDependencies.compileDependencies +: LibDependencies.testDependencies,
