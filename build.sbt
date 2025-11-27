@@ -1,6 +1,6 @@
 val libName = "play-conditional-form-mapping"
 
-val scala2_13 = "2.13.12"
+val scala2_13 = "2.13.16"
 val scala3 = "3.3.3"
 
 ThisBuild / scalaVersion       := scala2_13
