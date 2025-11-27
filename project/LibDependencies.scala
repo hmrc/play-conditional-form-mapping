@@ -3,7 +3,7 @@ import sbt._
 object LibDependencies {
 
   val compileDependencies =
-    "org.playframework" %% "play" % "3.0.0"
+    "org.playframework" %% "play" % "3.0.9"
 
   val testDependencies = Seq(
       "org.scalatest"          %% "scalatest"    % "3.2.17",
